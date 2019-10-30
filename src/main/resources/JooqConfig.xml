@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<configuration>
+    <jdbc>
+        <driver>org.postgresql.Driver</driver>
+        <url>jdbc:postgresql://127.0.0.1:5433/mydb10</url>
+        <user>postgres</user>
+        <password>1234</password>
+    </jdbc>
+    <generator>
+        <!-- 代码生成器 -->
+        <name>org.jooq.codegen.JavaGenerator</name>
+        <database>
+            <name>org.jooq.meta.postgres.PostgresDatabase</name>
+            <!--include和exclude用于控制为数据库中哪些表生成代码-->
+            <includes>.*</includes>
+            <excludes />
+            <!--schema名称-->
+            <inputSchema>myschema</inputSchema>
+        </database>
+        <target>
+            <!--生成代码文件的包名及放置目录-->
+            <packageName>com.zsx.generator.jooq</packageName>
+            <directory>src/main/java</directory>
+        </target>
+    </generator>
+</configuration>
