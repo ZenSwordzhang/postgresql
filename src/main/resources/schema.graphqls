@@ -3,7 +3,7 @@ schema {
 }
 
 type Query {
-    findBooks: [Book]
+#    findBooks: [Book]
     bookById(id: ID): Book
 }
 

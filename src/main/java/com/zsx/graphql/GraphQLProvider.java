@@ -2,6 +2,7 @@ package com.zsx.graphql;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
+import graphql.ExecutionResult;
 import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.idl.RuntimeWiring;
@@ -37,6 +38,9 @@ public class GraphQLProvider {
         String sdl = Resources.toString(url, Charsets.UTF_8);
         GraphQLSchema graphQLSchema = buildSchema(sdl);
         this.graphQL = GraphQL.newGraphQL(graphQLSchema).build();
+        String query = "{bookById(id: \"book-1\") {id, name, pageCount, author {firstName, lastName}}}";
+        ExecutionResult executionResult = graphQL.execute(query);
+        System.out.println("==========" + executionResult.toSpecification());
     }
 
     private GraphQLSchema buildSchema(String sdl) {
