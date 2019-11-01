@@ -1,8 +1,8 @@
 server:
   port: 8088
   #指定项目服务路径
-  servlet:
-    context-path: /api/v1
+#  servlet:
+#    context-path: /api/v1
 mybatis:
   type-aliases-package: com.zsx.entity
   mapper-locations: classpath:mybatis/mapper/*-mapper.xml
@@ -12,7 +12,7 @@ spring:
   datasource:
     username: postgres
     password: 1234
-    url: jdbc:postgresql://127.0.0.1:5433/mydb10
+    url: jdbc:postgresql://127.0.0.1:5432/mydb10
     driver-class-name: org.postgresql.Driver
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
@@ -24,44 +24,21 @@ spring:
         prepStmtCacheSqlLimit: 2048
         cachePrepStmts: true
         useServerPrepStmts: true
-#graphiql:
-#  mapping: /graphiql
-#  endpoint:
-#    graphql: /graphql
-#    subscriptions: /subscriptions
-#  subscriptions:
-#    timeout: 30
-#    reconnect: false
-#  static:
-#    basePath: /
-#  enabled: true
-#  pageTitle: GraphiQL
-#  cdn:
-#    enabled: false
-#    version: 0.13.0
-#  props:
-#    resources:
-#      query: root.graphqls
-#      defaultQuery: root.graphqls
-#      variables: schema.graphqls
-#    variables:
-#      editorTheme: "solarized light"
-#  headers:
-#    Authorization: "Bearer <your-token>"
-flyway:
-  # 是否启用flyway
-  enabled: true
-  ## 编码格式，默认UTF-8
-  encoding: UTF-8
-  ## 迁移sql脚本文件存放路径，默认db/migration
-  locations: db/migration
-  ## 迁移sql脚本文件名称的前缀，默认V
-  sql-migration-prefix: V
-  ## 迁移sql脚本文件名称的分隔符，默认2个下划线__
-  sql-migration-separator: __
-  # 迁移sql脚本文件名称的后缀
-  sql-migration-suffix: .sql
-  # 迁移时是否进行校验，默认true
-  validate-on-migrate: true
-  # 设置为true，当迁移发现数据库非空且存在没有元数据的表时，自动执行基准迁移，新建schema_version表
-  baseline-on-migrate: true
+  flyway:
+    # 是否启用flyway
+    enabled: true
+    ## 编码格式，默认UTF-8
+    encoding: UTF-8
+    ## 迁移sql脚本文件存放路径，默认db/migration
+    locations: classpath:db/migration
+    ## 迁移sql脚本文件名称的前缀，默认V
+    sqlMigrationPrefix: V
+    ## 迁移sql脚本文件名称的分隔符，默认2个下划线__
+    sqlMigrationSeparator: __
+    # 迁移sql脚本文件名称的后缀
+    sqlMigrationSuffixes: .sql
+    # 迁移时是否进行校验，默认true
+    validateOnMigrate: true
+    # 设置为true，当迁移发现数据库非空且存在没有元数据的表时，自动执行基准迁移，新建schema_version表
+    baselineOnMigrate: true
+    schemas: myschema, site_issue
