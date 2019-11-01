@@ -1,8 +1,8 @@
 server:
   port: 8088
   #指定项目服务路径
-#  servlet:
-#    context-path: /api/v1
+  servlet:
+    context-path: /api/v1
 mybatis:
   type-aliases-package: com.zsx.entity
   mapper-locations: classpath:mybatis/mapper/*-mapper.xml
@@ -41,4 +41,5 @@ spring:
     validateOnMigrate: true
     # 设置为true，当迁移发现数据库非空且存在没有元数据的表时，自动执行基准迁移，新建schema_version表
     baselineOnMigrate: true
+    # postgres10没有引入这个不提示错误，postgres12没有引入会报错
     schemas: myschema, site_issue

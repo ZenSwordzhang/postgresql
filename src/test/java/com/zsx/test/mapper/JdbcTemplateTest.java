@@ -42,7 +42,7 @@ public class JdbcTemplateTest {
         Map<String, String> personMap = ImmutableMap.<String, String> builder()
                 .put("personId", "128")
                 .put("name", "Tom1")
-                .put("age", "22")
+                .put("age", "20")
                 .put("createTime", "2019-10-31 17:51:23")
                 .build();
         String id = "4495bf53-3cf9-4048-b97e-c1505f7748c0";
@@ -51,7 +51,7 @@ public class JdbcTemplateTest {
 
     @Test
     void delete() {
-//        String sql = "DELETE myschema.test_jsonb SET testjson = ?::jsonb WHERE testid = ?";
-//        jdbcTemplate.update(sql, new Object[] {JSON.toJSONString(personMap), id});
+        String sql = "DELETE FROM myschema.test_jsonb WHERE testjson ::jsonb->>'age' = ? ";
+        jdbcTemplate.update(sql, new Object[] {"22"});
     }
 }

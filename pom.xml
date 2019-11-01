@@ -196,7 +196,7 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <configurationFile>src/main/resources/JooqConfig.xml</configurationFile>
+                    <configurationFile>classpath:resources/JooqConfig.xml</configurationFile>
                 </configuration>
             </plugin>
             <!-- flyway的插件配置 -->
