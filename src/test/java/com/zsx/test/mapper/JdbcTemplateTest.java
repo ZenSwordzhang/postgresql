@@ -21,6 +21,20 @@ public class JdbcTemplateTest {
     private JdbcTemplate jdbcTemplate;
 
     @Test
+    void create() {
+        String sqlDropDatabase = "DROP DATABASE IF EXISTS my_schema ";
+        jdbcTemplate.execute(sqlDropDatabase);
+        String sqlDatabase = "CREATE DATABASE my_schema";
+        jdbcTemplate.execute(sqlDatabase);
+        String sqlDrop = "DROP SCHEMA IF EXISTS my_schema CASCADE";
+        jdbcTemplate.execute(sqlDrop);
+        String sqlSchema = "CREATE schema my_schema";
+        jdbcTemplate.execute(sqlSchema);
+        String sqlTable = "CREATE TABLE my_schema.t_test(\"test_id\" varchar(64), \"test_json\" jsonb)";
+        jdbcTemplate.execute(sqlTable);
+    }
+
+    @Test
     void insert() {
         String sql = "INSERT INTO myschema.test_jsonb VALUES (?, ?::jsonb)";
         // 不可变Map
