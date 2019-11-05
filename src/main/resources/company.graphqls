@@ -1,9 +1,3 @@
-schema {
-    query: CompanyQuery
-}
-type CompanyQuery {
-    companyById(id: ID): Company
-}
 type Company {
     id: ID
     name: String
