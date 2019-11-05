@@ -9,6 +9,8 @@ import org.jooq.DeleteConditionStep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CompanyServiceImpl implements CompanyService {
 
@@ -24,7 +26,10 @@ public class CompanyServiceImpl implements CompanyService {
         return companyMapper.findById(id);
     }
 
-
+    @Override
+    public List<Company> getCompanies() {
+        return dslContext.selectFrom(company).fetch().into(Company.class);
+    }
 
     @Override
     public boolean delete(Integer id) {
