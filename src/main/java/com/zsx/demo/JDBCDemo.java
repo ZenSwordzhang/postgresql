@@ -16,12 +16,12 @@ public class JDBCDemo {
         Statement stmt = null;
         try {
             Class.forName("org.postgresql.Driver");
-            coon = DriverManager.getConnection("jdbc:postgresql://localhost:5433/mydb10", "postgres", "1234");
+            coon = DriverManager.getConnection("jdbc:postgresql://localhost:5432/mydb10", "postgres", "1234");
             coon.setAutoCommit(false);
             System.out.println("Opened database successfully");
 
             stmt = coon.createStatement();
-            ResultSet rs = stmt.executeQuery( "SELECT id, name, age, address, salary, join_date \"joinDate\" FROM company" );
+            ResultSet rs = stmt.executeQuery( "SELECT id, name, age, address, salary, join_date \"joinDate\" FROM myschema.company" );
             while (rs.next()) {
                 String  name = rs.getString("name");
                 System.out.println( "NAME = " + name );

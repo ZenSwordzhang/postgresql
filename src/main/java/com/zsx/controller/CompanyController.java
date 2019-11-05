@@ -1,5 +1,6 @@
 package com.zsx.controller;
 
+import com.zsx.annotation.CompanyDeal;
 import com.zsx.entity.Company;
 import com.zsx.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ public class CompanyController {
     private CompanyService companyService;
 
     @GetMapping("/{id}")
+    @CompanyDeal("hello world")
     public Company get(@PathVariable("id") Long id) {
         return companyService.get(id);
     }
