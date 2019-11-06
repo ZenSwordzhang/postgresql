@@ -5,6 +5,9 @@ schema {
 type Query {
     bookById(id: ID): Book
     companyById(id: ID): Company
+    hero(episode: Episode): Character
+    human(id : String) : Human
+    droid(id: ID!): Droid
 }
 
 type Book {

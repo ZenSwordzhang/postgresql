@@ -4,10 +4,8 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
-import graphql.schema.idl.RuntimeWiring;
-import graphql.schema.idl.SchemaGenerator;
-import graphql.schema.idl.SchemaParser;
-import graphql.schema.idl.TypeDefinitionRegistry;
+import graphql.schema.StaticDataFetcher;
+import graphql.schema.idl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -37,9 +35,11 @@ public class GraphQLProvider {
     public void init() throws IOException {
         URL urlSchema = Resources.getResource("schema.graphqls");
         URL urlCompany = Resources.getResource("company.graphqls");
+        URL urlStarWars = Resources.getResource("starWarsSchema.graphqls");
         String sdlSchema = Resources.toString(urlSchema, Charsets.UTF_8);
         String sdlCompany = Resources.toString(urlCompany, Charsets.UTF_8);
-        this.graphQL = GraphQL.newGraphQL(buildSchema(sdlSchema, sdlCompany)).build();
+        String sdlStarWars = Resources.toString(urlStarWars, Charsets.UTF_8);
+        this.graphQL = GraphQL.newGraphQL(buildSchema(sdlSchema, sdlCompany, sdlStarWars)).build();
     }
 
     private GraphQLSchema buildSchema(String ... schemaInputs) {
@@ -59,14 +59,34 @@ public class GraphQLProvider {
     private RuntimeWiring buildWiring() {
         return RuntimeWiring.newRuntimeWiring()
                 .type(newTypeWiring("Query")
-                        .dataFetcher("bookById", bookGraphQLDataFetchers.getBookByIdDataFetcher()))
+                        .dataFetcher("bookById", bookGraphQLDataFetchers.getBookByIdDataFetcher())
+                        .dataFetcher("companyById", companyGraphQLDataFetchers.getCompanyByIdDataFetcher())
+                        .dataFetcher("hero", new StaticDataFetcher(StarWarsData.getArtoo()))
+                        .dataFetcher("human", StarWarsData.getHumanDataFetcher())
+                        .dataFetcher("droid", StarWarsData.getDroidDataFetcher())
+                )
                 .type(newTypeWiring("Book")
                         .dataFetcher("author", bookGraphQLDataFetchers.getAuthorDataFetcher())
                         // This line is new: we need to register the additional DataFetcher
                         .dataFetcher("pageCount", bookGraphQLDataFetchers.getPageCountDataFetcher()))
-                .type(newTypeWiring("Query")
-                        .dataFetcher("companyById", companyGraphQLDataFetchers.getCompanyByIdDataFetcher()))
+                // this uses builder function lambda syntax
+                .type("Human", typeWiring -> typeWiring
+                        .dataFetcher("friends", StarWarsData.getFriendsDataFetcher()))
+                // you can use builder syntax if you don't like the lambda syntax
+                .type("Droid", typeWiring -> typeWiring
+                        .dataFetcher("friends", StarWarsData.getFriendsDataFetcher()))
+                // or full builder syntax if that takes your fancy
+                .type(newTypeWiring("Character")
+                        .typeResolver(StarWarsData.getCharacterTypeResolver()).build())
                 .build();
+    }
+
+    private RuntimeWiring buildDynamicRuntimeWiring() {
+        WiringFactory dynamicWiringFactory = new WiringFactory() {
+
+        };
+        return RuntimeWiring.newRuntimeWiring()
+                .wiringFactory(dynamicWiringFactory).build();
     }
 
 }
