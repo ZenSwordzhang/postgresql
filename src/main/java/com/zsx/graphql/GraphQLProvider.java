@@ -6,6 +6,8 @@ import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.StaticDataFetcher;
 import graphql.schema.idl.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -13,11 +15,15 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import static graphql.schema.idl.TypeRuntimeWiring.newTypeWiring;
 
 @Component
 public class GraphQLProvider {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(GraphQLProvider.class);
 
     private GraphQL graphQL;
 
@@ -32,19 +38,27 @@ public class GraphQLProvider {
     }
 
     @PostConstruct
-    public void init() throws IOException {
-        URL urlSchema = Resources.getResource("schema.graphqls");
-        URL urlCompany = Resources.getResource("company.graphqls");
-        URL urlStarWars = Resources.getResource("starWarsSchema.graphqls");
-        URL urlProduct = Resources.getResource("product.graphqls");
-        String sdlSchema = Resources.toString(urlSchema, Charsets.UTF_8);
-        String sdlCompany = Resources.toString(urlCompany, Charsets.UTF_8);
-        String sdlStarWars = Resources.toString(urlStarWars, Charsets.UTF_8);
-        String sdlProduct = Resources.toString(urlProduct, Charsets.UTF_8);
-        this.graphQL = GraphQL.newGraphQL(buildSchema(sdlSchema, sdlCompany, sdlStarWars, sdlProduct)).build();
+    public void init() {
+        List<String> sdls = getAllSdl("schema.graphqls", "company.graphqls", "starWarsSchema.graphqls", "product.graphqls");
+        this.graphQL = GraphQL.newGraphQL(buildSchema(sdls)).build();
     }
 
-    private GraphQLSchema buildSchema(String ... schemaInputs) {
+    private List<String> getAllSdl(String ... fileNames) {
+        try {
+            URL urlSchema;
+            List<String> sdls = new ArrayList<>();
+            for (String fileName: fileNames) {
+                urlSchema = Resources.getResource(fileName);
+                sdls.add(Resources.toString(urlSchema, Charsets.UTF_8));
+            }
+            return sdls;
+        } catch (IOException e) {
+            LOGGER.error("GraphQLProvider.getAllSdl.IOException", e);
+            return null;
+        }
+    }
+
+    private GraphQLSchema buildSchema(List<String> schemaInputs) {
         // TODO: we will create the schema here later
         TypeDefinitionRegistry typeRegistry = new TypeDefinitionRegistry();
         // each registry is merged into the main registry

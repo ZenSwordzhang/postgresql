@@ -23,8 +23,4 @@ public enum EpisodeEnum {
         return null;
     }
 
-    private static Integer getValue(String name) {
-        return null;
-    }
-
 }
