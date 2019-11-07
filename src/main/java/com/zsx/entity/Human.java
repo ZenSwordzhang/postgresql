@@ -8,10 +8,10 @@ public class Human implements Character {
     final String id;
     final String name;
     final List<String> friends;
-    final List<EpisodeEnum> appearsIn;
+    final List<Integer> appearsIn;
     final String homePlanet;
 
-    public Human(String id, String name, List<String> friends, List<EpisodeEnum> appearsIn, String homePlanet) {
+    public Human(String id, String name, List<String> friends, List<Integer> appearsIn, String homePlanet) {
         this.id = id;
         this.name = name;
         this.friends = friends;
@@ -31,7 +31,7 @@ public class Human implements Character {
         return friends;
     }
 
-    public List<EpisodeEnum> getAppearsIn() {
+    public List<Integer> getAppearsIn() {
         return appearsIn;
     }
 

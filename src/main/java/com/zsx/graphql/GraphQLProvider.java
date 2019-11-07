@@ -73,10 +73,14 @@ public class GraphQLProvider {
                         .dataFetcher("pageCount", bookGraphQLDataFetchers.getPageCountDataFetcher()))
                 // this uses builder function lambda syntax
                 .type("Human", typeWiring -> typeWiring
-                        .dataFetcher("friends", StarWarsData.getFriendsDataFetcher()))
+                        .dataFetcher("friends", StarWarsData.getFriendsDataFetcher())
+                )
                 // you can use builder syntax if you don't like the lambda syntax
                 .type("Droid", typeWiring -> typeWiring
-                        .dataFetcher("friends", StarWarsData.getFriendsDataFetcher()))
+                        .dataFetcher("friends", StarWarsData.getFriendsDataFetcher())
+                )
+                .type(newTypeWiring("Episode")
+                        .enumValues(StarWarsData.getEpisodeProvider()))
                 // or full builder syntax if that takes your fancy
                 .type(newTypeWiring("Character")
                         .typeResolver(StarWarsData.getCharacterTypeResolver()).build())

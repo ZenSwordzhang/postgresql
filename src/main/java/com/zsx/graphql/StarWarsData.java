@@ -5,6 +5,8 @@ import com.zsx.entity.EpisodeEnum;
 import com.zsx.entity.Human;
 import graphql.schema.DataFetcher;
 import graphql.schema.TypeResolver;
+import graphql.schema.idl.EnumValuesProvider;
+import graphql.schema.idl.NaturalEnumValuesProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,7 @@ public class StarWarsData {
             "1000",
             "Luke Skywalker",
             asList("1002", "1003", "2000", "2001"),
-            asList(EpisodeEnum.NEWHOPE, EpisodeEnum.EMPIRE, EpisodeEnum.JEDI),
+            asList(4, 5, 6),
             "Tatooine"
     );
 
@@ -29,7 +31,7 @@ public class StarWarsData {
             "1001",
             "Darth Vader",
             asList("1004"),
-            asList(EpisodeEnum.NEWHOPE, EpisodeEnum.EMPIRE, EpisodeEnum.JEDI),
+            asList(4, 5, 6),
             "Tatooine"
     );
 
@@ -37,7 +39,7 @@ public class StarWarsData {
             "1002",
             "Han Solo",
             asList("1000", "1003", "2001"),
-            asList(EpisodeEnum.NEWHOPE, EpisodeEnum.EMPIRE, EpisodeEnum.JEDI),
+            asList(4, 5, 6),
             null
     );
 
@@ -45,7 +47,7 @@ public class StarWarsData {
             "1003",
             "Leia Organa",
             asList("1000", "1002", "2000", "2001"),
-            asList(EpisodeEnum.NEWHOPE, EpisodeEnum.EMPIRE, EpisodeEnum.JEDI),
+            asList(4, 5, 6),
             "Alderaan"
     );
 
@@ -53,7 +55,7 @@ public class StarWarsData {
             "1004",
             "Wilhuff Tarkin",
             asList("1001"),
-            asList(EpisodeEnum.JEDI),
+            asList(6),
             null
     );
 
@@ -72,7 +74,7 @@ public class StarWarsData {
             "2000",
             "C-3PO",
             asList("1000", "1002", "1003", "2001"),
-            asList(EpisodeEnum.NEWHOPE, EpisodeEnum.EMPIRE, EpisodeEnum.JEDI),
+            asList(4, 5, 6),
             "Protocol"
     );
 
@@ -80,7 +82,7 @@ public class StarWarsData {
             "2001",
             "R2-D2",
             asList("1000", "1002", "1003"),
-            asList(EpisodeEnum.NEWHOPE, EpisodeEnum.EMPIRE, EpisodeEnum.JEDI),
+            asList(4, 5, 6),
             "Astromech"
     );
 
@@ -160,6 +162,19 @@ public class StarWarsData {
                 return env.getSchema().getObjectType("Droid");
             }
             return null;
+        };
+    }
+
+    public static TypeResolver getEpisodeTypeResolver() {
+        return env -> {
+            return env.getSchema().getObjectType("Episode");
+        };
+    }
+
+    public static EnumValuesProvider getEpisodeProvider() {
+        return name -> {
+            EpisodeEnum episodeEnum = EpisodeEnum.valueOf(name);
+            return  episodeEnum == null ? null : episodeEnum.getValue();
         };
     }
 

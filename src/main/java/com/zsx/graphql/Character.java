@@ -1,7 +1,5 @@
 package com.zsx.graphql;
 
-import com.zsx.entity.EpisodeEnum;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,6 +11,6 @@ public interface Character extends Serializable {
 
     List<String> getFriends();
 
-    List<EpisodeEnum> getAppearsIn();
+    List<Integer> getAppearsIn();
 
 }
