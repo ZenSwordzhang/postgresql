@@ -36,10 +36,12 @@ public class GraphQLProvider {
         URL urlSchema = Resources.getResource("schema.graphqls");
         URL urlCompany = Resources.getResource("company.graphqls");
         URL urlStarWars = Resources.getResource("starWarsSchema.graphqls");
+        URL urlProduct = Resources.getResource("product.graphqls");
         String sdlSchema = Resources.toString(urlSchema, Charsets.UTF_8);
         String sdlCompany = Resources.toString(urlCompany, Charsets.UTF_8);
         String sdlStarWars = Resources.toString(urlStarWars, Charsets.UTF_8);
-        this.graphQL = GraphQL.newGraphQL(buildSchema(sdlSchema, sdlCompany, sdlStarWars)).build();
+        String sdlProduct = Resources.toString(urlProduct, Charsets.UTF_8);
+        this.graphQL = GraphQL.newGraphQL(buildSchema(sdlSchema, sdlCompany, sdlStarWars, sdlProduct)).build();
     }
 
     private GraphQLSchema buildSchema(String ... schemaInputs) {

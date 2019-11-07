@@ -1,12 +1,14 @@
 package com.zsx.test;
 
 import com.zsx.test.entity.*;
-import graphql.TypeResolutionEnvironment;
+import graphql.*;
 import graphql.schema.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.List;
 
 import static graphql.Scalars.GraphQLBoolean;
 import static graphql.Scalars.GraphQLString;
@@ -226,6 +228,36 @@ public class GraphQLTest {
                         .name("friends")
                         .type(GraphQLList.list(GraphQLTypeReference.typeRef("Person"))))
                 .build();
+    }
+
+    @Test
+    void testGraphQL() {
+
+        final GraphQLObjectType queryType = newObject()
+                .name("hero")
+                .field(newFieldDefinition()
+                        .name("name")
+                        .type(GraphQLString)
+                )
+                .build();
+        GraphQLSchema schema = GraphQLSchema.newSchema()
+                .query(queryType)
+                .build();
+
+        GraphQL graphQL = GraphQL.newGraphQL(schema)
+                .build();
+
+        ExecutionInput executionInput = ExecutionInput.newExecutionInput().query("query { hero { name } }")
+                .build();
+
+        ExecutionResult executionResult = graphQL.execute(executionInput);
+
+        Object data = executionResult.getData();
+        System.out.println("========================");
+        System.out.println(data);
+        List<GraphQLError> errors = executionResult.getErrors();
+        System.out.println(errors);
+
     }
 
     private DataFetcher getFooDataFetcher() {

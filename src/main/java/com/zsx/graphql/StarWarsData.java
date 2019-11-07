@@ -6,6 +6,7 @@ import com.zsx.entity.Human;
 import graphql.schema.DataFetcher;
 import graphql.schema.TypeResolver;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import java.util.LinkedHashMap;
@@ -133,13 +134,12 @@ public class StarWarsData {
     }
 
     public static DataFetcher getFriendsDataFetcher() {
-        return dataFetchingEnvironment -> {
-            String id  = dataFetchingEnvironment.getArgument("id");
-            return humans
-                    .stream()
-                    .filter(human -> human.getId().equals(id))
-                    .findFirst()
-                    .orElse(null).getFriends();
+//        for (String id : environment.source.friends) {
+        return environment -> {
+            List<Object> result = new ArrayList<>();
+            List<String> friendIds = ((Character)environment.getSource()).getFriends();
+            friendIds.forEach(id -> {result.add(getCharacter(id));});
+            return result;
         };
     }
 
@@ -161,5 +161,11 @@ public class StarWarsData {
             }
             return null;
         };
+    }
+
+    private static Character getCharacter(String id) {
+        if (humanData.get(id) != null) return humanData.get(id);
+        if (droidData.get(id) != null) return droidData.get(id);
+        return null;
     }
 }

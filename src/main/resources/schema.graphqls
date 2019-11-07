@@ -8,6 +8,7 @@ type Query {
     hero(episode: Episode): Character
     human(id : String) : Human
     droid(id: ID!): Droid
+    products(match : String) : [Product]
 }
 
 type Book {
