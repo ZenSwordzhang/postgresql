@@ -1,15 +1,14 @@
-schema {
-    query: QueryType
-}
-
-type QueryType {
-    books: [Book]
-}
-
 type Book {
     id: ID
     name: String
     pageCount: Int
     author: Author
     publisher: String
+}
+
+type Author {
+    id: ID
+    firstName: String
+    lastName: String
+    age: Int
 }

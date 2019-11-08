@@ -39,7 +39,7 @@ public class GraphQLProvider {
 
     @PostConstruct
     public void init() {
-        List<String> sdls = getAllSdl("schema.graphqls", "company.graphqls", "starWarsSchema.graphqls", "product.graphqls");
+        List<String> sdls = getAllSdl("schema.graphqls", "book.graphqls", "company.graphqls", "starWarsSchema.graphqls", "product.graphqls");
         this.graphQL = GraphQL.newGraphQL(buildSchema(sdls)).build();
     }
 
