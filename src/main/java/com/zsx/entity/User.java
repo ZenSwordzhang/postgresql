@@ -49,6 +49,7 @@ public class User implements Serializable {
         return "User{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", friendIds=" + friendIds +
                 '}';
     }
 }

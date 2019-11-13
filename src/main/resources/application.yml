@@ -1,3 +1,6 @@
+#logging:
+#  level:
+#    root: debug
 server:
   port: 8088
   #指定项目服务路径
@@ -43,3 +46,5 @@ spring:
     baselineOnMigrate: true
     # postgres10没有引入这个不提示错误，postgres12没有引入会报错
     schemas: myschema, site_issue
+  jooq:
+    sql-dialect: POSTGRES

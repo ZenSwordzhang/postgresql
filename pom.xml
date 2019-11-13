@@ -152,6 +152,12 @@
             <scope>test</scope>
             <!--<version>${junit-jupiter.version}</version>-->
         </dependency>
+        <!-- 反射包reflections -->
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.11</version>
+        </dependency>
         <!-- 引入热部署 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
