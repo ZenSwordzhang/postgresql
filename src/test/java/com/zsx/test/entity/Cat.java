@@ -8,6 +8,7 @@ public class Cat extends Animal {
     private Long id;
     private String firstName;
     private Integer age;
+    private int height;
     // 食量
     private BigDecimal foodIntake;
     private Date birthDate;

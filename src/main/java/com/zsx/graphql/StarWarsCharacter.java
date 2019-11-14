@@ -1,4 +1,4 @@
-package com.zsx.entity;
+package com.zsx.graphql;
 
 import java.util.List;
 

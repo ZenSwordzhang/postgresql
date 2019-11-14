@@ -79,14 +79,14 @@ public class BatchGraphQLProvider {
                 .build();
 
         DataLoaderRegistry registry = new DataLoaderRegistry();
-        registry.register("user", userDataLoader);
-//        registry.register("1000", userDataLoader);
-//        registry.register("1001", userDataLoader);
-//        registry.register("1002", userDataLoader);
-//        registry.register("1003", userDataLoader);
-//        registry.register("1004", userDataLoader);
-//        registry.register("2000", userDataLoader);
-//        registry.register("2001", userDataLoader);
+//        registry.register("user", userDataLoader);
+        registry.register("1000", userDataLoader);
+        registry.register("1001", userDataLoader);
+        registry.register("1002", userDataLoader);
+        registry.register("1003", userDataLoader);
+        registry.register("1004", userDataLoader);
+        registry.register("2000", userDataLoader);
+        registry.register("2001", userDataLoader);
         System.out.println("=====================");
         System.out.println(registry.getKeys());
         ExecutionInput executionInput = newExecutionInput()
@@ -126,7 +126,7 @@ public class BatchGraphQLProvider {
                 .type(newTypeWiring("QueryType")
                         .dataFetcher("user", batchDataFetcher.getUserDataFetcher()))
                 .type("User", typeWiring -> typeWiring
-                        .dataFetcher("friends", batchDataFetcher.getFriendsDataFetcher())
+                        .dataFetcher("friends", batchDataFetcher.getFriendsDataFetcher1())
                 ).build();
     }
 

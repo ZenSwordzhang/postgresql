@@ -1,6 +1,5 @@
 package com.zsx.graphql;
 
-import com.zsx.entity.StarWarsCharacter;
 import graphql.ExecutionInput;
 import graphql.ExecutionResult;
 import graphql.GraphQL;

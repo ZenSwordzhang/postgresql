@@ -1,7 +1,7 @@
 package com.zsx.graphql.fetcher;
 
-import com.zsx.entity.StarWarsCharacter;
 import com.zsx.entity.User;
+import com.zsx.graphql.StarWarsCharacter;
 import graphql.schema.DataFetcher;
 import org.dataloader.DataLoader;
 import org.springframework.stereotype.Component;
@@ -77,6 +77,23 @@ public class BatchDataFetcher {
         };
     }
 
+    public DataFetcher getFriendsDataFetcher1() {
+        return environment -> {
+            List<String> friendIds = ((User)environment.getSource()).getFriendIds();
+            return friendIds.stream().map(id -> loadUserById(id)).collect(Collectors.toList());
+        };
+    }
+
+    public DataFetcher getFriendsDataFetcher2() {
+        return environment -> {
+//            StarWarsCharacter starWarsCharacter = environment.getSource();
+//            List<String> friendIds = starWarsCharacter.getFriendIds();
+            List<String> friendIds = ((User)environment.getSource()).getFriendIds();
+            DataLoader<String, Object> dataLoader = environment.getDataLoader("user");
+            return dataLoader.loadMany(friendIds);
+        };
+    }
+
     public DataFetcher getUserDataFetcher() {
         return dataFetchingEnvironment -> {
             return loadUserById(dataFetchingEnvironment.getArgument("id"));
@@ -98,7 +115,7 @@ public class BatchDataFetcher {
     public static void main(String[] args) {
         BatchDataFetcher batchDataFetcher = new BatchDataFetcher();
         List<String> userIds = List.of("1000", "1002");
-        System.out.println(userIds.stream().map(id -> batchDataFetcher.loadUserById(id)).collect(Collectors.toList()));
+        System.out.println(userIds.stream().map(batchDataFetcher::loadUserById).collect(Collectors.toList()));
         System.out.println(userIds.stream().map(id -> batchDataFetcher.loadUserById(id)).collect(Collectors.toList()));
     }
 

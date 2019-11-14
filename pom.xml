@@ -31,6 +31,7 @@
         <!--<graphql-java-spring-boot-starter-webmvc.version>1.0</graphql-java-spring-boot-starter-webmvc.version>-->
         <guava.version>28.1-jre</guava.version>
         <!--<junit-jupiter.version>5.4.2</junit-jupiter.version>-->
+        <sfm-jooq-version>8.1.1</sfm-jooq-version>
     </properties>
 
     <parent>
@@ -139,6 +140,12 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
+        </dependency>
+        <!-- sfm-jooq -->
+        <dependency>
+            <groupId>org.simpleflatmapper</groupId>
+            <artifactId>sfm-jooq</artifactId>
+            <version>${sfm-jooq-version}</version>
         </dependency>
         <!-- junit5运行所需jar包 -->
         <dependency>

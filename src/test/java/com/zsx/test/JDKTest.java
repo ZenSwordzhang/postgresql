@@ -1,12 +1,11 @@
 package com.zsx.test;
 
-import com.google.common.base.Predicate;
 import com.google.common.collect.*;
 import com.zsx.test.entity.Animal;
 import com.zsx.test.entity.Cat;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import org.junit.jupiter.api.Test;
 import org.reflections.ReflectionUtils;
+import org.simpleflatmapper.util.TypeHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,7 +84,23 @@ public class JDKTest {
     @Test
     void testType() {
         System.out.println("Object和Object相同:"+Object.class.isAssignableFrom(Object.class));
-        System.out.println("Cat和继承于Animal:"+Cat.class.getSuperclass().isAssignableFrom(Animal.class));
+        System.out.println("Cat和继承于Animal:"+Animal.class.isAssignableFrom(Cat.class.getSuperclass()));
+        System.out.println("Cat和继承于Object:"+Object.class.isAssignableFrom(Cat.class.getSuperclass()));
+        System.out.println(Long.class.isAssignableFrom(long.class));
+        System.out.println(Integer.class.isAssignableFrom(int.class));
+
+        Field[] fields = Cat.class.getDeclaredFields();
+        for (Field field : fields) {
+            if (TypeHelper.areEquals(field.getType(), Integer.class)) {
+                System.out.println("TypeHelper1==========" + field.getName());
+            }
+            if (TypeHelper.areEquals(Integer.class, field.getType())) {
+                System.out.println("TypeHelper2==========" + field.getName());
+            }
+            if (Integer.class.isAssignableFrom(field.getType())) {
+                System.out.println("==========" + field.getName());
+            }
+        }
     }
 
     @Test
