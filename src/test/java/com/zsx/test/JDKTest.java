@@ -3,6 +3,8 @@ package com.zsx.test;
 import com.google.common.collect.*;
 import com.zsx.test.entity.Animal;
 import com.zsx.test.entity.Cat;
+import com.zsx.test.entity.IBehavior;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.reflections.ReflectionUtils;
 import org.simpleflatmapper.util.TypeHelper;
@@ -101,6 +103,12 @@ public class JDKTest {
                 System.out.println("==========" + field.getName());
             }
         }
+    }
+
+    @Test
+    @DisplayName("Test whether A implements B")
+    void testAImplementsB() {
+        System.out.println(IBehavior.class.isAssignableFrom(Cat.class));
     }
 
     @Test

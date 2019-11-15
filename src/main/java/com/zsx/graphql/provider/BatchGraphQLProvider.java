@@ -62,6 +62,11 @@ public class BatchGraphQLProvider {
         BatchLoader<String, User> userBatchLoader = new BatchLoader<String, User>() {
             @Override
             public CompletionStage<List<User>> load(List<String> keys) {
+                System.out.println();
+                System.out.println("aaaaa================================");
+                keys.forEach(System.out::println);
+                System.out.println("bbbbb================================");
+                System.out.println();
                 return CompletableFuture.supplyAsync(() -> batchDataFetcher.getUserDataViaBatchHTTPApi(keys));
             }
         };
