@@ -9,5 +9,5 @@ type QueryType {
 type User {
     id: ID
     name: String
-    friends: User
+    friends: [User]
 }

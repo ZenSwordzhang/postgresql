@@ -84,7 +84,6 @@ public class BatchGraphQLProvider {
                 .build();
 
         DataLoaderRegistry registry = new DataLoaderRegistry();
-//        registry.register("user", userDataLoader);
         registry.register("1000", userDataLoader);
         registry.register("1001", userDataLoader);
         registry.register("1002", userDataLoader);

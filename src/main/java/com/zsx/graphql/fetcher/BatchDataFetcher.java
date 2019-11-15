@@ -4,6 +4,7 @@ import com.zsx.entity.User;
 import com.zsx.graphql.StarWarsCharacter;
 import graphql.schema.DataFetcher;
 import org.dataloader.DataLoader;
+import org.jooq.meta.derby.sys.Sys;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -80,14 +81,19 @@ public class BatchDataFetcher {
     public DataFetcher getFriendsDataFetcher1() {
         return environment -> {
             List<String> friendIds = ((User)environment.getSource()).getFriendIds();
-            return friendIds.stream().map(id -> loadUserById(id)).collect(Collectors.toList());
+            System.out.println();
+            friendIds.forEach(System.out::println);
+            System.out.println();
+
+            List<User> users = friendIds.stream().map(id -> loadUserById(id)).collect(Collectors.toList());
+            users.forEach(System.out::print);
+            System.out.println();
+            return users;
         };
     }
 
     public DataFetcher getFriendsDataFetcher2() {
         return environment -> {
-//            StarWarsCharacter starWarsCharacter = environment.getSource();
-//            List<String> friendIds = starWarsCharacter.getFriendIds();
             List<String> friendIds = ((User)environment.getSource()).getFriendIds();
             DataLoader<String, Object> dataLoader = environment.getDataLoader("user");
             return dataLoader.loadMany(friendIds);
@@ -114,7 +120,7 @@ public class BatchDataFetcher {
 
     public static void main(String[] args) {
         BatchDataFetcher batchDataFetcher = new BatchDataFetcher();
-        List<String> userIds = List.of("1000", "1002");
+        List<String> userIds = List.of("1002", "1003", "2000", "2001");
         System.out.println(userIds.stream().map(batchDataFetcher::loadUserById).collect(Collectors.toList()));
         System.out.println(userIds.stream().map(id -> batchDataFetcher.loadUserById(id)).collect(Collectors.toList()));
     }
