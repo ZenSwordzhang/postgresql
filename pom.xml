@@ -68,7 +68,8 @@
             <artifactId>graphql-spring-boot-starter</artifactId>
             <version>${graphql-spring-boot-starter.version}</version>
         </dependency>
-        <!-- graphql-java-spring-boot-starter-webmvc -->
+        <!-- 引入graphql-java-spring-boot-starter-webmvc，需将graphQL的bean注入到容器
+         否则会报 Field graphQL in graphql.spring.web.servlet.components.DefaultGraphQLInvocation required a bean of type 'graphql.GraphQL' that could not be found.-->
         <dependency>
             <groupId>com.graphql-java</groupId>
             <artifactId>graphql-java-spring-boot-starter-webmvc</artifactId>

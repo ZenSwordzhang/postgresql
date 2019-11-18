@@ -48,3 +48,10 @@ spring:
     schemas: myschema, site_issue
   jooq:
     sql-dialect: POSTGRES
+    # 配置未生效，原因是未将自定义的schema的bean注入到容器
+graphql:
+  servlet:
+    mapping: /mygraphql
+graphiql:
+  endpoint:
+    graphql: /mygraphql

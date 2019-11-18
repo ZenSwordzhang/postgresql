@@ -25,8 +25,6 @@ public class GraphQLProvider {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GraphQLProvider.class);
 
-    private GraphQL graphQL;
-
     @Autowired
     private BookGraphQLDataFetchers bookGraphQLDataFetchers;
     @Autowired
@@ -34,13 +32,13 @@ public class GraphQLProvider {
 
     @Bean
     public GraphQL graphQL() {
-        return graphQL;
+        return GraphQL.newGraphQL(schema()).build();
     }
 
-    @PostConstruct
-    public void init() {
+    @Bean
+    public GraphQLSchema schema() {
         List<String> sdls = getAllSdl("schema.graphqls", "book.graphqls", "company.graphqls", "starWarsSchema.graphqls", "product.graphqls");
-        this.graphQL = GraphQL.newGraphQL(buildSchema(sdls)).build();
+        return buildSchema(sdls);
     }
 
     private List<String> getAllSdl(String ... fileNames) {
