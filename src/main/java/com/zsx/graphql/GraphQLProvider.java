@@ -30,6 +30,20 @@ public class GraphQLProvider {
     @Autowired
     private CompanyGraphQLDataFetchers companyGraphQLDataFetchers;
 
+    // 通过graphQL注入的形式等价于schema注入，graphQL注入bean不能自定义graphql.servlet.mapping
+//    private GraphQL graphQL;
+//
+//    @Bean
+//    public GraphQL graphQL() {
+//        return graphQL;
+//    }
+//
+//    @PostConstruct
+//    public void init() {
+//        List<String> sdls = getAllSdl("schema.graphqls", "book.graphqls", "company.graphqls", "starWarsSchema.graphqls", "product.graphqls");
+//        this.graphQL = GraphQL.newGraphQL(buildSchema(sdls)).build();
+//    }
+
     @Bean
     public GraphQL graphQL() {
         return GraphQL.newGraphQL(schema()).build();
