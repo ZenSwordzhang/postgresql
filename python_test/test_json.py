@@ -9,13 +9,21 @@ print(type(employees), employees)
 
 # test json.dumps
 json_str = json.dumps(employees)
-print('json.dumps(user) return: ')
+print('json.dumps(employees) return: ')
 print(type(json_str), json_str)
 
 # test json.loads
-print('json.loads(str) return: ')
+print('json.loads(json_str) return: ')
 json_dict = json.loads(json_str)
 print(type(json_dict), json_dict)
+
+print('json.loads("1") return: ')
+_int = json.loads("1")
+print(type(_int), _int)
+
+print('json.loads("1.1") return: ')
+_float = json.loads("1.1")
+print(type(_float), _float)
 
 # r只读 w可写 a追加
 # test json.dump
